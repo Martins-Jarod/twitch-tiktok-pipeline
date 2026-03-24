@@ -1,0 +1,37 @@
+# API & HTTP
+requests
+httpx
+python-dotenv
+
+# Twitch
+twitchAPI
+
+# Téléchargement
+yt-dlp
+
+# Traitement vidéo
+moviepy
+Pillow
+
+# Sous-titres / STT
+faster-whisper
+# Scheduler
+APScheduler
+
+# Base de données
+# SQLite est inclus dans Python stdlib
+
+# Configuration
+PyYAML
+pydantic
+pydantic-settings
+
+# LLM
+groq
+
+# Logging
+loguru
+
+# Tests
+pytest
+pytest-asyncio

@@ -1,0 +1,25 @@
+# ============================================
+# Liste des Streamers à Surveiller
+# ============================================
+
+streamers:
+  - username: "xqc"
+    display_name: "xQc"
+    category: "variety"
+    enabled: true
+    
+  - username: "kaicenat"
+    display_name: "Kai Cenat"
+    category: "variety"
+    enabled: true
+    
+  - username: "pokimane"
+    display_name: "Pokimane"
+    category: "variety"
+    enabled: false              # Désactivé temporairement
+
+# Catégories de jeux à surveiller (optionnel)
+game_categories:
+  - name: "Just Chatting"
+    game_id: "509658"
+    enabled: false

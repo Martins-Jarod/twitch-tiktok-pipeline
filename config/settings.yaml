@@ -1,0 +1,68 @@
+# ============================================
+# Configuration Principale du Pipeline
+# ============================================
+
+twitch:
+  client_id: "${TWITCH_CLIENT_ID}"
+  client_secret: "${TWITCH_CLIENT_SECRET}"
+  
+  # Critères de filtrage des clips
+  filters:
+    min_views: 500              # Vues minimum
+    max_duration_seconds: 60    # Durée max en secondes
+    min_duration_seconds: 10    # Durée min en secondes  
+    max_age_hours: 48           # Clips des dernières 48h seulement
+    max_clips_per_run: 10       # Max clips traités par exécution
+
+video:
+  output_format: "mp4"
+  output_width: 1080
+  output_height: 1920
+  fps: 30
+  video_codec: "libx264"
+  audio_codec: "aac"
+  crf: 23                       # Qualité (18=haute, 28=basse)
+  
+  # Mode de conversion 16:9 → 9:16
+  # Options: "blur_background" | "crop_center"
+  conversion_mode: "blur_background"
+  
+  blur_strength: 20             # Intensité du flou background
+
+subtitles:
+  enabled: true
+  model: "small"                # tiny/base/small/medium/large
+  language: "auto"              # auto-détection
+  
+  # Style des sous-titres
+  style:
+    font: "Arial"
+    font_size: 18
+    font_color: "white"
+    outline_color: "black"
+    outline_width: 2
+    position: "bottom"          # bottom / center
+    margin_bottom: 150          # pixels depuis le bas
+
+metadata:
+  provider: "groq"              # groq | gemini | template
+  groq_api_key: "${GROQ_API_KEY}"
+  language: "fr"                # Langue des titres/hashtags
+  hashtag_count: 5
+
+scheduler:
+  enabled: true
+  interval_hours: 6             # Exécution toutes les 6 heures
+  timezone: "Europe/Paris"
+
+storage:
+  output_dir: "./output"
+  tmp_dir: "./tmp"
+  logs_dir: "./logs"
+  db_path: "./data/pipeline.db"
+  keep_tmp_files: false         # Supprimer les fichiers temporaires
+
+logging:
+  level: "INFO"                 # DEBUG | INFO | WARNING | ERROR
+  file_rotation: "1 day"
+  keep_days: 7
