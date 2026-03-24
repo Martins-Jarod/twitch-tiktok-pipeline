@@ -3,8 +3,11 @@ Client Twitch API avec authentification OAuth2 Client Credentials.
 Gère automatiquement le renouvellement des tokens.
 """
 
+from __future__ import annotations
+from typing import Optional
 import time
 import requests
+
 from loguru import logger
 from src.utils.helpers import load_config
 
@@ -21,7 +24,7 @@ class TwitchClient:
     def __init__(self, client_id: str, client_secret: str):
         self.client_id = client_id
         self.client_secret = client_secret
-        self._access_token: str | None = None
+        self._access_token: Optional[str] = None
         self._token_expires_at: float = 0
         
     def _get_access_token(self) -> str:
@@ -29,7 +32,6 @@ class TwitchClient:
         Récupère ou renouvelle le token d'accès.
         Le token est mis en cache jusqu'à expiration.
         """
-        # Token encore valide (avec marge de 60 secondes)
         if self._access_token and time.time() < self._token_expires_at - 60:
             return self._access_token
             
@@ -60,7 +62,7 @@ class TwitchClient:
             "Authorization": f"Bearer {self._get_access_token()}",
         }
     
-    def get_user_id(self, username: str) -> str | None:
+    def get_user_id(self, username: str) -> Optional[str]:
         """
         Récupère l'ID Twitch d'un utilisateur à partir de son username.
         
@@ -89,9 +91,9 @@ class TwitchClient:
         self,
         broadcaster_id: str,
         first: int = 20,
-        started_at: str | None = None,
-        ended_at: str | None = None,
-    ) -> list[dict]:
+        started_at: Optional[str] = None,
+        ended_at: Optional[str] = None,
+    ) -> list:
         """
         Récupère les clips d'un broadcaster.
         
@@ -106,7 +108,7 @@ class TwitchClient:
         """
         params = {
             "broadcaster_id": broadcaster_id,
-            "first": min(first, 100),  # Limite API = 100
+            "first": min(first, 100),
         }
         
         if started_at:

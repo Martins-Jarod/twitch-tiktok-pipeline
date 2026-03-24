@@ -2,6 +2,8 @@
 Téléchargement des clips Twitch via yt-dlp.
 """
 
+from __future__ import annotations
+from typing import Optional
 import os
 import subprocess
 from pathlib import Path
@@ -11,38 +13,23 @@ from src.utils.helpers import load_config
 
 
 class ClipDownloader:
-    """
-    Télécharge les clips Twitch en utilisant yt-dlp.
-    Gère les erreurs et les retries automatiquement.
-    """
     
     def __init__(self):
         self.config = load_config()
         self.tmp_dir = Path(self.config["storage"]["tmp_dir"])
         self.tmp_dir.mkdir(parents=True, exist_ok=True)
         
-    def download(self, clip: dict) -> Path | None:
-        """
-        Télécharge un clip Twitch.
-        
-        Args:
-            clip: Données du clip (doit contenir 'id' et 'url')
-            
-        Returns:
-            Chemin vers le fichier téléchargé, ou None en cas d'échec
-        """
+    def download(self, clip: dict) -> Optional[Path]:
         clip_id = clip["id"]
         clip_url = clip["url"]
         output_path = self.tmp_dir / f"{clip_id}.mp4"
         
-        # Si déjà téléchargé (cache temporaire)
         if output_path.exists():
             logger.debug(f"Clip {clip_id} déjà dans le cache tmp")
             return output_path
         
         logger.info(f"⬇️  Téléchargement du clip {clip_id}...")
         
-        # Construction de la commande yt-dlp
         command = [
             "yt-dlp",
             "--format", "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
@@ -60,13 +47,11 @@ class ClipDownloader:
                 command,
                 capture_output=True,
                 text=True,
-                timeout=120  # 2 minutes max
+                timeout=120
             )
             
             if result.returncode != 0:
-                logger.error(
-                    f"yt-dlp a échoué pour {clip_id}: {result.stderr}"
-                )
+                logger.error(f"yt-dlp a échoué pour {clip_id}: {result.stderr}")
                 return None
             
             if not output_path.exists():
@@ -74,9 +59,7 @@ class ClipDownloader:
                 return None
                 
             file_size_mb = output_path.stat().st_size / (1024 * 1024)
-            logger.success(
-                f"✓ Clip {clip_id} téléchargé ({file_size_mb:.1f} MB)"
-            )
+            logger.success(f"✓ Clip {clip_id} téléchargé ({file_size_mb:.1f} MB)")
             return output_path
             
         except subprocess.TimeoutExpired:
@@ -90,7 +73,6 @@ class ClipDownloader:
             return None
     
     def cleanup(self, file_path: Path) -> None:
-        """Supprime un fichier temporaire."""
         try:
             if file_path.exists():
                 file_path.unlink()
