@@ -7,7 +7,7 @@ python-dotenv==1.0.0
 twitchAPI==4.2.0
 
 # Téléchargement
-yt-dlp==2024.1.0
+yt-dlp==2023.7.6
 
 # Traitement vidéo
 moviepy==1.0.3
