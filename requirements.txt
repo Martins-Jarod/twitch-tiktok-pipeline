@@ -14,8 +14,8 @@ moviepy==1.0.3
 Pillow==10.2.0
 
 # Sous-titres / STT
-faster-whisper==0.10.0
-
+#faster-whisper==0.10.0
+openai-whisper==20231117 
 # Scheduler
 APScheduler==3.10.4
 
