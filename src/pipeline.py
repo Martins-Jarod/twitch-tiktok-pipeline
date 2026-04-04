@@ -10,7 +10,7 @@ from loguru import logger
 
 from src.fetcher.twitch_client import TwitchClient
 from src.fetcher.clip_fetcher import ClipFetcher
-from src.fetcher.downloader import Downloader
+from src.fetcher.downloader import ClipDownloader as Downloader
 from src.processor.video_converter import VideoConverter
 from src.processor.subtitle_engine import SubtitleEngine
 from src.processor.subtitle_burner import SubtitleBurner

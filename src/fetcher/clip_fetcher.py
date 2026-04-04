@@ -8,13 +8,13 @@ from datetime import datetime, timezone, timedelta
 from loguru import logger
 
 from src.fetcher.twitch_client import TwitchClient
-from src.storage.database import ClipDatabase
+from src.storage.database import Database, ClipStatus
 from src.utils.helpers import load_config, load_streamers
 
 
 class ClipFetcher:
     
-    def __init__(self, twitch_client: TwitchClient, database: ClipDatabase):
+    def __init__(self, twitch_client: TwitchClient, database: Database):
         self.client = twitch_client
         self.db = database
         self.config = load_config()

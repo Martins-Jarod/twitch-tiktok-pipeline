@@ -162,7 +162,7 @@ Réponds UNIQUEMENT avec ce JSON :
             f"⚡ {streamer} a tout déchiré ! #{game or 'Twitch'}",
             f"😂 {streamer} : quand ça part en live...",
             f"🎮 Le clip que tu dois voir de {streamer}",
-            f"💥 CLIP DU JOUR : {streamer}
+            f"💥 CLIP DU JOUR : {streamer}",
         ]
         
         title = random.choice(title_templates)
